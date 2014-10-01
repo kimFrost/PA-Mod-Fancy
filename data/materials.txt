@@ -1,0 +1,88 @@
+
+BEGIN Object
+	Name				Snack
+	Width				1
+	Height				1
+	Toughness			1.0000
+	Price				-50
+	MaxStackSize			20
+	RenderDepth			1
+	Properties			Material
+	BEGIN	Sprite
+		x 2
+		y 1
+		w 1
+		h 1
+		RotateType 0
+	END
+	Properties			StaticObject
+END
+
+BEGIN Object
+	Name				SnackMachine
+	Width				2
+	Height				2
+	ConstructionTime	7.500000
+	MoveSpeedFactor		0.250000
+	Toughness			10.0000
+	MaxStackSize1		1
+	AttachToWall		true
+	Price				-1000
+	Group				StaticObject
+	BlockedBy			Wall
+	BlockedBy			StaticObject
+	BlockedBy			UtilityStation
+	MadeOf				Composite
+	SpriteScale			1.00
+	BEGIN	Sprite
+		x 0
+		y 0
+		w 2
+		h 2
+		RotateType 0
+		BEGIN Marker
+			x		1.0
+			y		1.0
+			Index 	1
+		END
+	END
+	Properties			StaticObject
+	Properties			Scripted
+END
+
+BEGIN Equipment
+	Name				SnackBox
+	Scale				0.80000
+	AttackPower			1.00000
+	RechargeTime		1.00000
+	BEGIN	Sprite
+		x 2
+		y 0
+		w 1
+		h 1
+		BEGIN Marker
+			x			1.0
+			y			1.0
+			Index		0
+		END
+	END
+END
+
+BEGIN Material
+	Name				NewMaterial
+	ConstructionTime	1.00000
+	MoveCost			0.7
+	SoftEdged			1
+	IndoorOutdoor 		1
+	ObjectRequired		Snack  
+	SpriteType			RandomArea
+	SpriteOverlayScale	5
+	NumSprites			2
+	BEGIN Sprite0    
+		x 5  y 4  
+	END
+    BEGIN Sprite1    
+		x 5  y 2  
+	END
+END
+			

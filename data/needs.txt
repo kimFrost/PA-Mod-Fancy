@@ -1,0 +1,11 @@
+
+BEGIN Provider
+	Action				EatSnack
+	ProviderType		Object
+	Object				Snack
+	PrimaryNeed			Food
+	PrimaryRate			-4.00000
+	SecondaryNeed		Recreation
+	SecondaryRate		-1.00000
+	ActionType			Use
+END

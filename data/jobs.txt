@@ -1,0 +1,8 @@
+
+BEGIN Job
+	Name				LoadSnackMachine
+	JobTime				5
+	Tool				SnackBox
+	Worker				Janitor
+	Worker				Prisoner
+END

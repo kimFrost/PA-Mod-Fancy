@@ -1,0 +1,15 @@
+
+BEGIN Program
+	Name				Munching
+	SessionCost			-100
+	Places				10
+	SessionLength		120
+	NumSessions			1
+	Difficulty			1
+	Research			Vending
+	Room				CommonRoom
+	Teacher				Warden
+	Equipment			Snack
+	Intake				Voluntary
+	Properties			Repeatable
+END

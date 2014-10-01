@@ -1,0 +1,6 @@
+
+object_snackmachine				Snack Machine From Language
+
+tooltip_vending_loading			Needs to be loaded/stocked with snacks
+
+job_custom_loadsnackmachine		Loading snack machine

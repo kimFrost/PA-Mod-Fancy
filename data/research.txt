@@ -1,0 +1,11 @@
+
+BEGIN Research
+	Name			Vending
+	Type			Ability
+	Requires		Warden
+	Admin			Warden
+	Cost			-400
+	Time			360
+	x				600
+	y				350
+END
