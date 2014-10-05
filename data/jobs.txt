@@ -1,8 +1,45 @@
 
 BEGIN Job
-	Name				LoadSnackMachine
+	Name				PlantBoxfarmSeed
 	JobTime				5
-	Tool				SnackBox
+	Tool				BoxfarmSeed
 	Worker				Janitor
 	Worker				Prisoner
+	Qualification	    None
+END
+
+BEGIN Job
+	Name				RestockBoxfarmSeedContainer
+	JobTime				5
+	Tool				BoxfarmSeedBag
+	Worker				Janitor
+	Worker				Prisoner
+	Qualification	    None
+END
+
+
+
+
+BEGIN Job
+	Name				BoxfarmPlant_Havest
+	JobTime				10
+	Worker				Janitor
+	Worker				Prisoner
+	Qualification	    None
+END
+
+BEGIN Job
+	Name				BoxfarmPlant_Water
+	JobTime				2
+	Worker				Janitor
+	Worker				Prisoner
+	Qualification	    None
+END
+
+BEGIN Job
+	Name				BoxfarmPlant_Tend
+	JobTime				5
+	Worker				Janitor
+	Worker				Prisoner
+	Qualification	    None
 END

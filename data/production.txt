@@ -1,7 +1,15 @@
 
 BEGIN ProductionRule
 	Rule			Storage
-	Material		SnackBox
-	Container		SnackMachine
+	Material		BoxfarmSeed
+	Container		BoxfarmSeedContainer
 	Distribution	Random
+	Condition       NotLoaded
+END
+
+
+
+BEGIN Processor
+
+
 END

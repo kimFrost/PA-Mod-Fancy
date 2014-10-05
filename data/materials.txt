@@ -1,32 +1,14 @@
 
 BEGIN Object
-	Name				Snack
-	Width				1
-	Height				1
-	Toughness			1.0000
-	Price				-50
-	MaxStackSize			20
-	RenderDepth			1
-	Properties			Material
-	BEGIN	Sprite
-		x 2
-		y 1
-		w 1
-		h 1
-		RotateType 0
-	END
-	Properties			StaticObject
-END
-
-BEGIN Object
-	Name				SnackMachine
-	Width				2
-	Height				2
-	ConstructionTime	7.500000
+	Name 				Boxfarm
+	Width				9
+	Height				3
+	ConstructionTime	10.000000
 	MoveSpeedFactor		0.250000
-	Toughness			10.0000
-	MaxStackSize1		1
-	AttachToWall		true
+	Toughness			30.0000
+	MaxStackSize		1
+	AttachToWall		false
+	NumSlots			4
 	Price				-1000
 	Group				StaticObject
 	BlockedBy			Wall
@@ -34,26 +16,170 @@ BEGIN Object
 	BlockedBy			UtilityStation
 	MadeOf				Composite
 	SpriteScale			1.00
+	Properties			StaticObject
+	Properties			SlowDelivery
+	Properties			Scripted
 	BEGIN	Sprite
 		x 0
-		y 0
-		w 2
-		h 2
-		RotateType 0
+		y 2
+		w 9
+		h 3
+		RotateType 4
 		BEGIN Marker
-			x		1.0
-			y		1.0
-			Index 	1
+			x			2.0
+			y			2.0
+			Index		0
+		END
+		BEGIN Marker
+			x			4.0
+			y			2.0
+			Index		1
+		END
+		BEGIN Marker
+			x			6.0
+			y			2.0
+			Index		2
+		END
+		BEGIN Marker
+			x			8.0
+			y			2.0
+			Index		3
 		END
 	END
+END
+
+
+BEGIN Object
+	Name				BoxfarmPlant
+	Width				1
+	Height				1
+	Toughness			2.00000
+	Price				-50
+	ConstructionTime	2.00000
+	MoveSpeedFactor		0.80000
+	MaxStackSize		1
+	RenderDepth			1
+	Group				StaticObject
+	BlockedBy			Wall
+	BlockedBy			StaticObject
+	BlockedBy			UtilityStation
+	--Properties			Material
 	Properties			StaticObject
+	--Properties			SlowDelivery
+	--Properties			RoomSpecific
+	--WorkGroup            	Garden
+  	--AutoOrder            Compost
+	--AutoOrderQuantity    1
 	Properties			Scripted
+	BEGIN Sprite
+		x 0
+		y 5
+		w 1
+		h 1
+		RotateType 0
+	END
+	BEGIN Sprite
+		x 1
+		y 5
+		w 1
+		h 1
+		RotateType 0
+	END
+	BEGIN Sprite
+		x 2
+		y 5
+		w 1
+		h 1
+		RotateType 0
+	END
+	BEGIN Sprite
+		x 3
+		y 5
+		w 1
+		h 1
+		RotateType 0
+	END
+	BEGIN Sprite
+		x 4
+		y 5
+		w 1
+		h 1
+		RotateType 0
+	END
+	BEGIN StackSprite
+		x 5
+		y 5
+		w 1
+		h 1
+		RotateType 0
+	END
+END
+
+BEGIN Object
+	Name 				BoxfarmSeedContainer
+	Width				1
+	Height				1
+	ConstructionTime	2.000000
+	MoveSpeedFactor		0.250000
+	Toughness			3.0000
+	RenderDepth			1
+	MaxStackSize		1
+	AttachToWall		false
+	NumSlots			1
+	Price				-100
+	Group				StaticObject
+	BlockedBy			Wall
+	BlockedBy			StaticObject
+	BlockedBy			UtilityStation
+	MadeOf				Composite
+	SpriteScale			1.00
+	Properties			StaticObject
+	Properties			SlowDelivery
+	Properties			Scripted
+	BEGIN	Sprite
+		x 3
+		y 0
+		w 1
+		h 1
+		RotateType 4
+		BEGIN Marker
+			x			0.5
+			y			0.5
+			Index		0
+		END
+	END
+END
+
+
+BEGIN Object
+	Name 				BoxfarmSeed
+	Width				1
+	Height				1
+	RenderDepth			3
+	ConstructionTime	1.00000
+	MoveSpeedFactor		0.90000
+	Toughness			1.00000
+	MaxStackSize		50
+	Price				-2
+	Group				StaticObject
+	BlockedBy			Wall
+	MadeOf				Composite
+	SpriteScale			1.00
+	Properties          Material
+	Properties			SlowDelivery
+	BEGIN	Sprite
+		x 2
+		y 0
+		w 1
+		h 1
+		RotateType 4
+	END
 END
 
 BEGIN Equipment
-	Name				SnackBox
+	Name				BoxfarmSeedBag
 	Scale				0.80000
-	AttackPower			1.00000
+	AttackPower			0.00000
 	RechargeTime		1.00000
 	BEGIN	Sprite
 		x 2
@@ -61,12 +187,52 @@ BEGIN Equipment
 		w 1
 		h 1
 		BEGIN Marker
-			x			1.0
-			y			1.0
+			x			0.0
+			y			0.0
 			Index		0
 		END
 	END
 END
+
+
+BEGIN Equipment
+    Name                 BoxfarmTrowel
+    Scale                0.800000
+    AttackPower          1.00000
+    RechargeTime         1.00000
+    Properties           Tools
+    Properties           Metal
+    BEGIN   Sprite
+        x 8
+        y 0
+        w 2
+        h 2
+        RotateType 4
+        BEGIN Marker
+           x             0.9
+           y             1.0
+           Index         0
+        END
+    END
+END
+
+
+BEGIN Room
+	Name				Garden
+	Properties          PrisonersCanWork
+	WorkGroup           Garden
+	BEGIN Requirement Type Enclosed END
+	BEGIN Requirement Type MinimumSize  x 11  y 5  END
+	BEGIN Requirement Type Object  Id BoxfarmSeedContainer  END
+	BEGIN Requirement Type Outdoor END
+	BEGIN Contraband  Id    Trowel  END
+END
+
+
+
+
+
+
 
 BEGIN Material
 	Name				NewMaterial
@@ -74,7 +240,7 @@ BEGIN Material
 	MoveCost			0.7
 	SoftEdged			1
 	IndoorOutdoor 		1
-	ObjectRequired		Snack  
+	ObjectRequired		Snack
 	SpriteType			RandomArea
 	SpriteOverlayScale	5
 	NumSprites			2
@@ -85,4 +251,3 @@ BEGIN Material
 		x 5  y 2  
 	END
 END
-			

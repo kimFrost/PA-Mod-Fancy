@@ -1,6 +1,12 @@
 
-object_snackmachine				Snack Machine From Language
+object_snackmachine						Snack Machine From Language
 
-tooltip_vending_loading			Needs to be loaded/stocked with snacks
+tooltip_vending_loading					Needs to be loaded/stocked with snacks
 
-job_custom_loadsnackmachine		Loading snack machine
+tooltip_boxfarmplant_wrongmaterial		Plants will only grow on dirt
+
+job_custom_loadsnackmachine				Loading snack machine
+
+
+object_boxfarm							Boxfarm
+
