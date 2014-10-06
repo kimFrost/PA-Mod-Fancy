@@ -1,35 +1,38 @@
 
 function Create()
-    Object.SetProperty("Age", 0.0);
-    Object.SetProperty("VegType", "NOT SET" );
-    Object.SetProperty("SubType", 0);
 
     local plantTypes = {
         {
             name = "Cabbage",
             requirements = {
-                nutrients = 2500,
-                water = 600,
+                nutrients = 700,
+                water = 1200,
                 weeded = true
             }
         },
         {
             name = "Potato",
             requirements = {
-                nutrients = 2000,
+                nutrients = 2200,
                 water = 800,
                 weeded = false
             }
         }
     }
     local numOfPlantTypes = 0;
-    for i,plantType in ipairs(plantTypes) do
+    for i, plantType in ipairs(plantTypes) do
         numOfPlantTypes = numOfPlantTypes + 1;
-        --pressed = CheckEntityType( plantType, searchDistance, ourX, ourY ) or pressed
     end
 
-end
+    -- + 1 because lua is not zero indexed
+    local vegIndex = math.floor(math.random() * numOfPlantTypes) + 1;
+    local vegType = plantTypes[vegIndex].name;
 
+    Object.SetProperty("Age", 0.0);
+    Object.SetProperty("SubType", 0);
+    Object.SetProperty("GrowthRate", 1.0);
+    Object.SetProperty("VegType", vegType);
+end
 
 function Update(timePassed)
 
@@ -41,13 +44,14 @@ function Update(timePassed)
     local ourX = Object.GetProperty("Pos.x");
     local ourY = Object.GetProperty("Pos.y");
     local material = Object.GetMaterial( ourX, ourY );
+    local vegType = Object.GetProperty("VegType");
 
     if material ~= "Dirt" then
         Object.SetProperty("Tooltip", "tooltip_boxfarmplant_wrongmaterial");
         return;
     end
     -- clear the tooltip
-    Object.SetProperty("Tooltip", "");
+    --Object.SetProperty("Tooltip", "");
 
     -- Increase Age
     local age = Object.GetProperty("Age");
@@ -77,7 +81,7 @@ function Update(timePassed)
     end
 
     -- Set tooltips for debug
-    --Object.SetProperty("Tooltip", "Age: " .. tostring(age) .. "\n" .. "subType: " .. tostring(subType) .. "\n" .. "Grown: " .. tostring(procentageGrown) .. "%");
+    Object.SetProperty("Tooltip", "Age: " .. tostring(age) .. "\n" .. "subType: " .. tostring(subType) .. "\n" .. "Grown: " .. tostring(procentageGrown) .. "%" .. "\n" .. "vegType: " .. tostring(vegType));
 end
 
 

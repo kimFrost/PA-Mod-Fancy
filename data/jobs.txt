@@ -20,6 +20,8 @@ END
 
 
 
+
+
 BEGIN Job
 	Name				BoxfarmPlant_Havest
 	JobTime				10
@@ -28,6 +30,7 @@ BEGIN Job
 	Qualification	    None
 END
 
+
 BEGIN Job
 	Name				BoxfarmPlant_Water
 	JobTime				2
@@ -35,6 +38,16 @@ BEGIN Job
 	Worker				Prisoner
 	Qualification	    None
 END
+
+
+BEGIN Job
+	Name				BoxfarmPlant_Fertilize
+	JobTime				3
+	Worker				Janitor
+	Worker				Prisoner
+	Qualification	    None
+END
+
 
 BEGIN Job
 	Name				BoxfarmPlant_Tend

@@ -106,6 +106,13 @@ BEGIN Object
 		h 1
 		RotateType 0
 	END
+	BEGIN Sprite
+		x 6
+		y 5
+		w 1
+		h 1
+		RotateType 0
+	END
 	BEGIN StackSprite
 		x 5
 		y 5
