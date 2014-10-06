@@ -4,10 +4,29 @@ function Create()
     Object.SetProperty("VegType", "NOT SET" );
     Object.SetProperty("SubType", 0);
 
-    local plantTypes = { "Cabbage", "Potato" }
-    --for i,plantType in ipairs( plantTypes ) do
+    local plantTypes = {
+        {
+            name = "Cabbage",
+            requirements = {
+                nutrients = 2500,
+                water = 600,
+                weeded = true
+            }
+        },
+        {
+            name = "Potato",
+            requirements = {
+                nutrients = 2000,
+                water = 800,
+                weeded = false
+            }
+        }
+    }
+    local numOfPlantTypes = 0;
+    for i,plantType in ipairs(plantTypes) do
+        numOfPlantTypes = numOfPlantTypes + 1;
         --pressed = CheckEntityType( plantType, searchDistance, ourX, ourY ) or pressed
-    --end
+    end
 
 end
 
