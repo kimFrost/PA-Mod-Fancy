@@ -63,7 +63,6 @@ function Update(timePassed)
 
 
     -- Set variables for later use
-    local maxAge = 300.0;
     local numOfStates = 5;
     local mass = Object.GetProperty("Mass");
     local growthRate = Object.GetProperty("GrowthRate");
@@ -88,7 +87,6 @@ function Update(timePassed)
     -- Increae mass
     mass = mass + (timePassed * growthRate);
     Object.SetProperty( "Mass", Mass );
-
 
     -- Calculate the state of the plant
     local subType = 0;
