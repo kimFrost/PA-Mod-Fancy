@@ -54,6 +54,8 @@ function Create()
     --Debug values
     Object.SetProperty("DebugThis", requirements.nutrients);
 
+
+
     -- Job request states (Jobs need to be requested every frame, for some reason. Seems illogical)
     --Object.SetProperty("JobHavestRequested", false);
     --Object.SetProperty("JobWaterRequested", false);
@@ -63,6 +65,8 @@ end
 
 
 function Update(timePassed)
+
+    Game.DebugOut("Something");
 
     -- Get position and material the plant is on
     local ourX = Object.GetProperty("Pos.x");
