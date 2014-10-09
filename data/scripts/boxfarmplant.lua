@@ -4,7 +4,7 @@ function Create()
     local plantTypes = {
         {
             name = "Cabbage",
-            minGrowthRate = 0,0,
+            minGrowthRate = 0.0,
             maxGrowthRate = 3.0,
             requirements = {
                 nutrients = 700,
@@ -15,7 +15,7 @@ function Create()
         },
         {
             name = "Potato",
-            minGrowthRate = 0,0,
+            minGrowthRate = 0.0,
             maxGrowthRate = 2.0,
             requirements = {
                 nutrients = 2200,
@@ -50,12 +50,17 @@ function Create()
     Object.SetProperty("TimeSinceWatered", 0);
     Object.SetProperty("TimeSinceFertilized", 0);
 
-    -- Job request states
-    Object.SetProperty("JobHavestRequested", false);
-    Object.SetProperty("JobWaterRequested", false);
-    Object.SetProperty("JobWeedRequested", false);
-    Object.SetProperty("JobFertilizeRequested", false);
+
+    --Debug values
+    Object.SetProperty("DebugThis", requirements.nutrients);
+
+    -- Job request states (Jobs need to be requested every frame, for some reason. Seems illogical)
+    --Object.SetProperty("JobHavestRequested", false);
+    --Object.SetProperty("JobWaterRequested", false);
+    --Object.SetProperty("JobWeedRequested", false);
+    --Object.SetProperty("JobFertilizeRequested", false);
 end
+
 
 function Update(timePassed)
 
@@ -85,7 +90,8 @@ function Update(timePassed)
     local timeSinceWeeded = Object.GetProperty("TimeSinceWeeded");
     local timeSinceWatered = Object.GetProperty("TimeSinceWatered");
     local timeSinceFertilized = Object.GetProperty("TimeSinceFertilized");
-    local jobHavestRequested = Object.GetProperty("JobHavestRequested");
+
+    --local jobHavestRequested = Object.GetProperty("JobHavestRequested");
 
     timeSinceWeeded = timeSinceWeeded + timePassed;
     timeSinceWatered = timeSinceWatered + timePassed;
@@ -148,8 +154,10 @@ function Update(timePassed)
         --end
     end
 
+    local debugThis = Object.GetProperty("DebugThis");
+
     -- Set tooltips for debug
-    Object.SetProperty("Tooltip", "maxGrowthRate: " .. tostring(maxGrowthRate) .. "\n" .. "growthRate: " .. tostring(growthRate) .. "\n" .. "Mass: " .. tostring(mass) .. "\n" .. "subType: " .. tostring(subType) .. "\n" .. "Grown: " .. tostring(procentageGrown) .. "%" .. "\n" .. "vegType: " .. tostring(vegType));
+    Object.SetProperty("Tooltip", "debugThis: " .. tostring(debugThis) .. "\n" .. "growthRate: " .. tostring(growthRate) .. "\n" .. "Mass: " .. tostring(mass) .. "\n" .. "subType: " .. tostring(subType) .. "\n" .. "Grown: " .. tostring(procentageGrown) .. "%" .. "\n" .. "vegType: " .. tostring(vegType));
 end
 
 
