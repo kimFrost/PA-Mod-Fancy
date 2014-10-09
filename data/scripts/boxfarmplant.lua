@@ -44,6 +44,17 @@ function Create()
     Object.SetProperty("Requirements", requirements);
     Object.SetProperty("MinGrowthRate", minGrowthRate);
     Object.SetProperty("MaxGrowthRate", maxGrowthRate);
+
+    -- Time since requirement met
+    Object.SetProperty("TimeSinceWeeded", 0);
+    Object.SetProperty("TimeSinceWatered", 0);
+    Object.SetProperty("TimeSinceFertilized", 0);
+
+    -- Job request states
+    Object.SetProperty("JobHavestRequested", false);
+    Object.SetProperty("JobWaterRequested", false);
+    Object.SetProperty("JobWeedRequested", false);
+    Object.SetProperty("JobFertilizeRequested", false);
 end
 
 function Update(timePassed)
@@ -61,19 +72,31 @@ function Update(timePassed)
     -- clear the tooltip
     --Object.SetProperty("Tooltip", "");
 
-
     -- Set variables for later use
     local numOfStates = 5;
+    local weedGrowTime = 100
+
     local mass = Object.GetProperty("Mass");
     local growthRate = Object.GetProperty("GrowthRate");
     local vegType = Object.GetProperty("VegType");
     local requirements = Object.GetProperty("Requirements");
     local minGrowthRate = Object.GetProperty("MinGrowthRate");
     local maxGrowthRate = Object.GetProperty("MaxGrowthRate");
+    local timeSinceWeeded = Object.GetProperty("TimeSinceWeeded");
+    local timeSinceWatered = Object.GetProperty("TimeSinceWatered");
+    local timeSinceFertilized = Object.GetProperty("TimeSinceFertilized");
+    local jobHavestRequested = Object.GetProperty("JobHavestRequested");
+
+    timeSinceWeeded = timeSinceWeeded + timePassed;
+    timeSinceWatered = timeSinceWatered + timePassed;
+    timeSinceFertilized = timeSinceFertilized + timePassed;
+
+    if mass == nil then
+       mass = 0;
+    end
 
 
     -- Calculate growth rate
-
 
     -- Needs Weeded
 
@@ -82,15 +105,22 @@ function Update(timePassed)
     -- Needs Fertilizer
 
 
-
+    -- Check for growthRate over or under limits
+    if growthRate > maxGrowthRate then
+        growthRate = maxGrowthRate;
+    end
+    if growthRate < minGrowthRate then
+        growthRate = minGrowthRate;
+    end
 
     -- Increae mass
     mass = mass + (timePassed * growthRate);
-    Object.SetProperty( "Mass", Mass );
+    Object.SetProperty("Mass", mass);
 
     -- Calculate the state of the plant
     local subType = 0;
-    local procentageGrown = 100 / (requirements.nutrients / mass);
+    --local procentageGrown = 100 / (requirements.nutrients / mass);
+    local procentageGrown = 100 / (200 / mass);
     local i = 0;
     while i <= numOfStates do
         local TempProcentage = 100 / numOfStates * i;
@@ -104,14 +134,22 @@ function Update(timePassed)
     if subType > (numOfStates-1) then
         -- Check for plant being too old
         -- Reset plant stage & age
-        SetState(0);
-        Object.SetProperty( "Mass", 0.0 );
+        --SetState(0);
+        --Object.SetProperty( "Mass", 0.0 );
     else
         SetState(subType);
     end
 
+    -- Request havest if fully grown
+    if procentageGrown >= 100 then
+        --if jobHavestRequested ~= true then
+            Object.CreateJob("BoxfarmPlant_Havest");
+            Object.SetProperty("JobHavestRequested", true);
+        --end
+    end
+
     -- Set tooltips for debug
-    Object.SetProperty("Tooltip", "Mass: " .. tostring(mass) .. "\n" .. "subType: " .. tostring(subType) .. "\n" .. "Grown: " .. tostring(procentageGrown) .. "%" .. "\n" .. "vegType: " .. tostring(vegType));
+    Object.SetProperty("Tooltip", "maxGrowthRate: " .. tostring(maxGrowthRate) .. "\n" .. "growthRate: " .. tostring(growthRate) .. "\n" .. "Mass: " .. tostring(mass) .. "\n" .. "subType: " .. tostring(subType) .. "\n" .. "Grown: " .. tostring(procentageGrown) .. "%" .. "\n" .. "vegType: " .. tostring(vegType));
 end
 
 
@@ -120,6 +158,12 @@ function SetState(state)
     if currentSubtype ~= state then
         Object.SetProperty("SubType", state);
     end
+end
+
+
+function JobComplete_BoxfarmPlant_Havest()
+    Object.SetProperty("SubType", 0);
+    Object.SetProperty( "Mass", 0.0 );
 end
 
 
