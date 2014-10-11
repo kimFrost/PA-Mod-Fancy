@@ -6,6 +6,8 @@ function Create()
             name = "Cabbage",
             minGrowthRate = 0.0,
             maxGrowthRate = 3.0,
+            spawnObjName = "BoxfarmCabbage",
+            spawnNumber = 1,
             requirements = {
                 nutrients = 700,
                 water = 1200,
@@ -17,6 +19,8 @@ function Create()
             name = "Potato",
             minGrowthRate = 0.0,
             maxGrowthRate = 2.0,
+            spawnObjName = "BoxfarmPotato",
+            spawnNumber = 3,
             requirements = {
                 nutrients = 2200,
                 water = 800,
@@ -41,7 +45,7 @@ function Create()
     Object.SetProperty("SubType", 0);
     Object.SetProperty("GrowthRate", 1.0);
     Object.SetProperty("VegType", vegType);
-    Object.SetProperty("Requirements", requirements);
+    Object.SetProperty("ReqNutrients", requirements.nutrients);
     Object.SetProperty("MinGrowthRate", minGrowthRate);
     Object.SetProperty("MaxGrowthRate", maxGrowthRate);
 
@@ -88,7 +92,7 @@ function Update(timePassed)
     local mass = Object.GetProperty("Mass");
     local growthRate = Object.GetProperty("GrowthRate");
     local vegType = Object.GetProperty("VegType");
-    local requirements = Object.GetProperty("Requirements");
+    local reqNutrients = Object.GetProperty("ReqNutrients");
     local minGrowthRate = Object.GetProperty("MinGrowthRate");
     local maxGrowthRate = Object.GetProperty("MaxGrowthRate");
     local timeSinceWeeded = Object.GetProperty("TimeSinceWeeded");
@@ -129,8 +133,7 @@ function Update(timePassed)
 
     -- Calculate the state of the plant
     local subType = 0;
-    --local procentageGrown = 100 / (requirements.nutrients / mass);
-    local procentageGrown = 100 / (200 / mass);
+    local procentageGrown = 100 / (reqNutrients / mass);
     local i = 0;
     while i <= numOfStates do
         local TempProcentage = 100 / numOfStates * i;
@@ -174,8 +177,22 @@ end
 
 
 function JobComplete_BoxfarmPlant_Havest()
+    -- Reset
     Object.SetProperty("SubType", 0);
     Object.SetProperty( "Mass", 0.0 );
+
+    local ourX = Object.GetProperty("Pos.x");
+    local ourY = Object.GetProperty("Pos.y");
+
+    -- Spawn objects
+    --local objID = Object.Spawn("BoxfarmPotato", ourX, ourY ) * 3;
+    local objID = Object.Spawn("BoxfarmCabbage", ourX, ourY );
+    if objID ~= nil then
+        local velX = -1.0 + math.random() + math.random();
+        local velY = -1.0 + math.random() + math.random();
+        Object.ApplyVelocity(objID, velX, velY);
+    end
+
 end
 
 
