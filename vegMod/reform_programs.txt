@@ -1,0 +1,15 @@
+
+BEGIN Program
+    Name            Horticulture
+    SessionCost     -100
+    Places          10
+    SessionLength   120
+    NumSessions     2
+    Difficulty      10
+    Research        PrisonLabour
+    Room            VegetablePatch
+    Teacher         Gardener
+    Equipment       None
+    Intake          Voluntary
+    Properties      Practical    
+END

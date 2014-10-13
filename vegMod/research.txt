@@ -1,0 +1,12 @@
+
+BEGIN Research   
+    Name                 Farming  
+    Type                 Ability  
+    Requires             PrisonLabour  
+    Admin                Maintainance  
+    Cost                 -1500  
+    Time                 360  
+    X                    420  
+    Y                    620 
+END
+

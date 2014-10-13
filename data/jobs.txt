@@ -1,58 +1,42 @@
 
-BEGIN Job
-	Name				PlantBoxfarmSeed
-	JobTime				5
-	Tool				BoxfarmSeed
-	Worker				Janitor
-	Worker				Prisoner
-	Qualification	    None
-END
-
-BEGIN Job
-	Name				RestockBoxfarmSeedContainer
-	JobTime				5
-	Tool				BoxfarmSeedBag
-	Worker				Janitor
-	Worker				Prisoner
-	Qualification	    None
-END
-
-
-
 
 
 
 BEGIN Job
 	Name				BoxfarmPlant_Havest
 	JobTime				10
-	Worker				Janitor
+	Worker				Gardener
 	Worker				Prisoner
-	Qualification	    None
+	Qualification	    Gardening
+	WorkGroup			Garden
 END
 
 
 BEGIN Job
 	Name				BoxfarmPlant_Water
 	JobTime				2
-	Worker				Janitor
+	Worker				Gardener
 	Worker				Prisoner
-	Qualification	    None
+	Qualification	    Gardening
+	WorkGroup			Garden
 END
 
 
 BEGIN Job
 	Name				BoxfarmPlant_Fertilize
 	JobTime				3
-	Worker				Janitor
+	Worker				Gardener
 	Worker				Prisoner
-	Qualification	    None
+	Qualification	    Gardening
+	WorkGroup			Garden
 END
 
 
 BEGIN Job
 	Name				BoxfarmPlant_Tend
 	JobTime				5
-	Worker				Janitor
+	Worker				Gardener
 	Worker				Prisoner
-	Qualification	    None
+	Qualification	    Gardening
+	WorkGroup			Garden
 END

@@ -1,5 +1,55 @@
 
 BEGIN Object
+	Name 				Boxfarm
+	Width				9
+	Height				3
+	ConstructionTime	10.000000
+	MoveSpeedFactor		0.250000
+	Toughness			30.0000
+	MaxStackSize		1
+	AttachToWall		false
+	NumSlots			4
+	Price				-1000
+	Group				StaticObject
+	BlockedBy			Wall
+	BlockedBy			StaticObject
+	BlockedBy			UtilityStation
+	MadeOf				Composite
+	SpriteScale			1.00
+	Properties			StaticObject
+	Properties			SlowDelivery
+	Properties			Scripted
+	BEGIN	Sprite
+		x 0
+		y 2
+		w 9
+		h 3
+		RotateType 4
+		BEGIN Marker
+			x			2.0
+			y			2.0
+			Index		0
+		END
+		BEGIN Marker
+			x			4.0
+			y			2.0
+			Index		1
+		END
+		BEGIN Marker
+			x			6.0
+			y			2.0
+			Index		2
+		END
+		BEGIN Marker
+			x			8.0
+			y			2.0
+			Index		3
+		END
+	END
+END
+
+
+BEGIN Object
 	Name 				BoxfarmCabbage
 	Width				1
 	Height				1
@@ -57,11 +107,9 @@ BEGIN Object
 	BlockedBy			UtilityStation
 	MaxStackSize		1
 	RenderDepth			1
-	Group               StaticObject
 	WorkGroup			Garden
 	Properties			Scripted
-	Properties          RoomSpecific
-	Properties          StaticObject
+	--Properties          StaticObject
 	BEGIN Sprite
 		x 0
 		y 5
@@ -162,6 +210,62 @@ END
 
 
 
+BEGIN Object
+	Name 				BoxfarmSeedContainer
+	Width				1
+	Height				1
+	ConstructionTime	2.000000
+	MoveSpeedFactor		0.250000
+	Toughness			3.0000
+	RenderDepth			1
+	MaxStackSize		1
+	AttachToWall		false
+	NumSlots			1
+	Price				-100
+	Group				StaticObject
+	BlockedBy			Wall
+	BlockedBy			StaticObject
+	BlockedBy			UtilityStation
+	MadeOf				Composite
+	SpriteScale			1.00
+	Properties			StaticObject
+	Properties			SlowDelivery
+	Properties			Scripted
+	BEGIN	Sprite
+		x 3
+		y 0
+		w 1
+		h 1
+		RotateType 4
+		BEGIN Marker
+			x			0.5
+			y			0.5
+			Index		0
+		END
+	END
+END
+
+BEGIN Equipment
+	Name				BoxfarmSeedBag
+	Scale				0.80000
+	AttackPower			0.00000
+	RechargeTime		1.00000
+	BEGIN	Sprite
+		x 2
+		y 0
+		w 1
+		h 1
+		BEGIN Marker
+			x			0.0
+			y			0.0
+			Index		0
+		END
+	END
+END
+
+
+
+
 BEGIN Equipment
     Name                 BoxfarmTrowel
     Scale                0.800000
@@ -187,13 +291,12 @@ END
 BEGIN Room
 	Name				Garden
 	Properties          PrisonersCanWork
-	Qualification		Gardening
 	WorkGroup           Garden
 	BEGIN Requirement Type Enclosed END
-	BEGIN Requirement Type MinimumSize  x 11  y 5 END
-	BEGIN Requirement Type Object  Id BoxfarmWorktable END
+	BEGIN Requirement Type MinimumSize  x 11  y 5  END
+	BEGIN Requirement Type Object  Id BoxfarmWorktable  END
 	BEGIN Requirement Type Outdoor END
-	BEGIN Contraband  Id BoxfarmTrowel END
+	BEGIN Contraband  Id    Trowel  END
 END
 
 

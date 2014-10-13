@@ -1,0 +1,255 @@
+
+BEGIN Object     
+    Name                 RawPotato
+    Width                1  
+    Height               1
+    Toughness            1.0000  
+    MaxStackSize         20
+    RenderDepth          1  
+    Properties           Material
+    BEGIN   Sprite
+        x 0 
+        y 0  
+        w 2  
+        h 2  
+        RotateType 0
+    END
+    BEGIN StackSprite
+        x 4
+        y 10
+        w 2
+        h 2
+        RotateType 0
+    END
+END
+
+BEGIN Object     
+    Name                 RawCabbage
+    Width                1  
+    Height               1
+    Toughness            1.0000  
+    MaxStackSize         20
+    RenderDepth          1  
+    Properties           Material
+    BEGIN   Sprite
+        x 2 
+        y 0  
+        w 2  
+        h 2  
+        RotateType 0
+    END
+    BEGIN StackSprite
+        x 4
+        y 2
+        w 2
+        h 2
+        RotateType 0
+    END
+END
+
+BEGIN Object     
+    Name                 Compost
+    Width                1  
+    Height               1
+    MaxStackSize         20
+    RenderDepth          1  
+    Toughness            1.0000  
+    Properties           Material
+    WorkGroup            VegetablePatch
+    BEGIN   Sprite
+        x 4 
+        y 0  
+        w 2  
+        h 2  
+        RotateType 0
+    END
+    BEGIN StackSprite
+        x 4
+        y 8
+        w 2
+        h 2
+        RotateType 0
+    END
+END
+
+BEGIN Object     
+    Name                 VegetableSeeds
+    Price                -50
+    Width                1  
+    Height               1
+    ConstructionTime     3.00000  
+    MoveSpeedFactor      0.250000  
+    Toughness            10.0000   
+    RenderDepth          1  
+    Properties           Scripted
+    Properties           RoomSpecific
+    Properties           StaticObject
+    Group                StaticObject
+    WorkGroup            VegetablePatch
+    BlockedBy            Wall  
+    BlockedBy            StaticObject  
+    BlockedBy            UtilityStation
+    AutoOrder            Compost
+    AutoOrderQuantity    1
+    BEGIN   Sprite
+        x 6 
+        y 8  
+        w 2  
+        h 2  
+        RotateType 0
+    END
+    BEGIN   Sprite
+        x 8 
+        y 8  
+        w 2  
+        h 2  
+        RotateType 0
+    END
+    BEGIN   Sprite
+        x 6 
+        y 0  
+        w 2  
+        h 2  
+        RotateType 0
+    END
+    BEGIN   Sprite
+        x 6 
+        y 10  
+        w 2  
+        h 2  
+        RotateType 0
+    END
+END
+
+
+BEGIN Object     
+    Name                 PreparationTable  
+    Width                3  
+    ConstructionTime     3.00000  
+    MoveSpeedFactor      0.250000  
+    Toughness            10.0000  
+    Price                -100  
+    NumSlots             3 
+    Group                StaticObject  
+    BlockedBy            Wall  
+    BlockedBy            StaticObject  
+    BlockedBy            UtilityStation  
+    MadeOf               Composite
+    Properties           StaticObject
+    Properties           Processor
+    Properties           RoomSpecific
+    WorkGroup            Kitchen
+    BEGIN   Sprite
+        x 0 
+        y 4  
+        w 6  
+        h 3  
+        RotateType 4
+        BEGIN Marker
+           x             1.5
+           y             1.0
+           orientation.x 0.0
+           orientation.y 0.0
+           Index         0
+        END
+        BEGIN Marker
+           x             3.1
+           y             1.0
+           Index         1
+        END
+        BEGIN Marker
+           x             4.7
+           y             1.0
+           Index         2
+        END
+    END
+END
+
+
+BEGIN Object     
+    Name                 Shed
+    Width                2
+    Height               3
+    ConstructionTime     20.00000
+    MoveSpeedFactor      0.250000  
+    Toughness            20.0000
+    Price                -500
+    Group                StaticObject  
+    BlockedBy            Wall  
+    BlockedBy            StaticObject  
+    BlockedBy            UtilityStation  
+    MadeOf               Wood
+    BEGIN   Sprite
+        x 6 
+        y 2  
+        w 4  
+        h 6  
+        RotateType 4
+    END
+    Properties           StaticObject
+END
+
+
+BEGIN Material   
+    Name                 Farmland
+    ConstructionTime     1.00000  
+    MoveCost             0.50000
+    ObjectRequired       Compost  
+    SoftEdged            1
+    IndoorOutdoor        1
+    SpriteOverlayScale   5
+    SpriteType           RandomArea
+    NumSprites           2 
+    BEGIN Sprite0    x 25  y 8  END
+    BEGIN Sprite1    x 5  y 2  END
+END
+
+BEGIN Equipment  
+    Name                 Trowel    
+    Scale                0.800000  
+    AttackPower          1.00000  
+    RechargeTime         1.00000  
+    Properties           Tools
+    Properties           Metal
+    BEGIN   Sprite
+        x 8 
+        y 0  
+        w 2  
+        h 2  
+        RotateType 0
+        BEGIN Marker
+           x             0.9
+           y             1.0
+           Index         0
+        END
+    END
+END
+
+BEGIN Room
+    Name                VegetablePatch
+    Research            Farming
+    Properties          PrisonersCanWork
+    WorkGroup           VegetablePatch
+    Qualification       Horticulture
+    BEGIN Requirement Type Enclosed END
+    BEGIN Requirement Type Object  Id VegetableSeeds  END
+    BEGIN Requirement Type Object  Id Shed  END
+    BEGIN Requirement Type MinimumSize  x 5  y 5  END
+    BEGIN Requirement Type Outdoor END
+    BEGIN Contraband  Id    Trowel  END
+END
+
+BEGIN Room       
+    Name                 Kitchen  
+    BEGIN Requirement Type Indoor  END
+    BEGIN Requirement Type Object  Id Cooker  END
+    BEGIN Requirement Type Object  Id Fridge  END
+    BEGIN Requirement Type Object  Id Sink END
+    BEGIN LikelyObject	Id		Bin				END
+    BEGIN LikelyObject	Id		StaffDoor	    END
+    BEGIN LikelyObject  Id      PreparationTable END
+    BEGIN Contraband    Id      Knife           END
+    BEGIN Contraband    Id      Fork            END
+    BEGIN Contraband    Id      Spoon           END
+    Properties           PrisonersCanWork
+END

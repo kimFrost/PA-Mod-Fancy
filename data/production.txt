@@ -1,15 +1,52 @@
 
 BEGIN ProductionRule
-	Rule			Storage
-	Material		BoxfarmSeed
-	Container		BoxfarmSeedContainer
-	Distribution	Random
-	Condition       NotLoaded
+	Rule				Storage
+	Material			BoxfarmSeed
+	Container			BoxfarmSeedContainer
+	Distribution		Random
+	Condition       	NotLoaded
+END
+
+BEGIN ProductionRule
+    Rule                Storage
+    Material            BoxfarmCabbage
+    Container          	BoxfarmWorktable
+    Distribution        Random
+	Condition			NotLoaded
+END
+
+BEGIN ProductionRule
+    Rule                Storage
+    Material            BoxfarmPotato
+    Container           BoxfarmWorktable
+    Distribution        Random
+    Condition			NotLoaded
 END
 
 
+BEGIN Processor
+	Processor			BoxfarmWorktable
+	Input				BoxfarmCabbage
+	InputCount			3
+	Output				Ingredients
+	OutputCount			1
+	OperatingTime		5.0
+	Worker				Prisoner
+	Worker				Gardener
+	Properties			ShowDuringOperation
+	Qualification		Gardening
+END
+
 
 BEGIN Processor
-
-
+	Processor			BoxfarmWorktable
+	Input				BoxfarmPotato
+	InputCount			8
+	Output				Ingredients
+	OutputCount			1
+	OperatingTime		7.0
+	Worker				Prisoner
+	Worker				Gardener
+	Properties			ShowDuringOperation
+	Qualification		Gardening
 END

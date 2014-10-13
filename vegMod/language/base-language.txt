@@ -1,0 +1,24 @@
+
+
+object_preparationtable             Preparation Table
+object_vegetableseeds               Vegetable Seeds
+object_rawpotato                    Potato
+object_rawcabbage                   Cabbage
+object_compost                      Compost
+object_shed                         Shed
+
+room_vegetablepatch                 Vegetable Patch
+
+research_farming                    Farming
+researchtooltip_farming             Allows you to place a vegetable patch in your prison and train your prisoners to grow vegetables that can contribute to your kitchens ingredients pool.
+
+reformprogram_horticulture          Horticulture
+
+material_farmland                   Compost
+
+equipment_trowel                    Trowel
+
+tooltip_seeds_compost               Seeds need to be planted in Compost before they will grow and produce vegetables.
+tooltip_seeds_needtending           This plant needs to be tended before it will grow more vegetables.
+
+job_custom_tendvegetables           Tend Vegetables

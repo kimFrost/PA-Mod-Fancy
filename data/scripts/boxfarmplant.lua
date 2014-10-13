@@ -40,12 +40,16 @@ function Create()
     local requirements = plantTypes[vegIndex].requirements;
     local minGrowthRate = plantTypes[vegIndex].minGrowthRate;
     local maxGrowthRate = plantTypes[vegIndex].maxGrowthRate;
+    local spawnObjName = plantTypes[vegIndex].spawnObjName;
+    local spawnNumber = plantTypes[vegIndex].spawnNumber;
 
     Object.SetProperty("Mass", 0.0);
     Object.SetProperty("SubType", 0);
     Object.SetProperty("GrowthRate", 1.0);
     Object.SetProperty("VegType", vegType);
     Object.SetProperty("ReqNutrients", requirements.nutrients);
+    Object.SetProperty("SpawnObjName", spawnObjName);
+    Object.SetProperty("SpawnNumber", spawnNumber);
     Object.SetProperty("MinGrowthRate", minGrowthRate);
     Object.SetProperty("MaxGrowthRate", maxGrowthRate);
 
@@ -70,7 +74,7 @@ end
 
 function Update(timePassed)
 
-    Game.DebugOut("Something");
+    --Game.DebugOut("Something");
 
     -- Get position and material the plant is on
     local ourX = Object.GetProperty("Pos.x");
@@ -108,6 +112,9 @@ function Update(timePassed)
     if mass == nil then
        mass = 0;
     end
+
+
+    --Object.SetProperty("DebugThis", type(timePassed) .. " " .. "timePassed: " .. timePassed );
 
 
     -- Calculate growth rate
@@ -183,14 +190,21 @@ function JobComplete_BoxfarmPlant_Havest()
 
     local ourX = Object.GetProperty("Pos.x");
     local ourY = Object.GetProperty("Pos.y");
+    local spawnObjName = Object.GetProperty("SpawnObjName");
+    local spawnNumber = Object.GetProperty("SpawnNumber");
+
+    --Object.SetProperty("DebugThis", type(spawnNumber));
 
     -- Spawn objects
-    --local objID = Object.Spawn("BoxfarmPotato", ourX, ourY ) * 3;
-    local objID = Object.Spawn("BoxfarmCabbage", ourX, ourY );
-    if objID ~= nil then
-        local velX = -1.0 + math.random() + math.random();
-        local velY = -1.0 + math.random() + math.random();
-        Object.ApplyVelocity(objID, velX, velY);
+    local i = 1;
+    while i  <= tonumber(spawnNumber) do
+        local objID = Object.Spawn(spawnObjName, ourX, ourY );
+        if objID ~= nil then
+            local velX = -1.0 + math.random() + math.random();
+            local velY = -1.0 + math.random() + math.random();
+            Object.ApplyVelocity(objID, velX, velY);
+        end
+        i = i + 1;
     end
 
 end

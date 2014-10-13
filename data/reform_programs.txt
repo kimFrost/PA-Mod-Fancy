@@ -1,4 +1,30 @@
 
+
+
+
+BEGIN Program
+	Name				Gardening
+	SessionCost			-20
+	Places				10
+	SessionLength		120
+	NumSessions			1
+	Difficulty			2
+	Research			None
+	Room				Garden
+	Teacher				Gardener
+	Equipment			None
+	Intake				Voluntary
+END
+
+
+
+
+
+
+
+
+
+
 BEGIN Program
 	Name				Munching
 	SessionCost			-100

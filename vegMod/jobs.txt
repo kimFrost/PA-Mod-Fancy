@@ -1,0 +1,9 @@
+
+BEGIN Job
+    Name                    TendVegetables
+    JobTime                 30
+    Tool                    Trowel
+    Worker                  Prisoner
+    Material                Compost
+    Qualification           Horticulture
+END

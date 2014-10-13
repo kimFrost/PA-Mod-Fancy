@@ -1,0 +1,80 @@
+
+BEGIN ProductionRule       
+    Rule                 Storage
+    Material             RawPotato  
+    Container            PreparationTable
+    Distribution         Random  
+END
+
+BEGIN ProductionRule       
+    Rule                 Storage
+    Material             RawCabbage
+    Container            PreparationTable
+    Distribution         Random  
+END
+
+BEGIN ProductionRule       
+    Rule                 Storage
+    Material             Compost
+    Room                 VegetablePatch
+    Distribution         Random  
+    Condition            NotLoaded  
+END
+
+BEGIN ProductionRule       
+    Rule                 Storage
+    Material             RawCabbage
+    Container            Table
+    Room                 Kitchen
+    Distribution         Random  
+    Condition            NotLoaded 
+END
+
+BEGIN ProductionRule       
+    Rule                 Storage
+    Material             RawPotato
+    Container            Table
+    Room                 Kitchen
+    Distribution         Random  
+    Condition            NotLoaded 
+END
+
+BEGIN ProductionRule       
+    Rule                 Storage
+    Material             RawCabbage
+    Room                 Kitchen
+    Distribution         Random  
+    Condition            NotLoaded 
+END
+
+BEGIN ProductionRule       
+    Rule                 Storage
+    Material             RawPotato
+    Room                 Kitchen
+    Distribution         Random  
+    Condition            NotLoaded 
+END
+
+BEGIN Processor
+    Processor           PreparationTable
+    Input               RawPotato
+    Output              Ingredients
+    OperatingTime       15.0
+    Properties          ShowDuringOperation
+    Object              PreparationTable
+    Worker              Cook
+    Worker              Prisoner
+    Qualification       KitchenInduction
+END
+
+BEGIN Processor
+    Processor           PreparationTable
+    Input               RawCabbage
+    Output              Ingredients
+    OperatingTime       15.0
+    Properties          ShowDuringOperation
+    Object              PreparationTable
+    Worker              Cook
+    Worker              Prisoner
+    Qualification       KitchenInduction
+END
