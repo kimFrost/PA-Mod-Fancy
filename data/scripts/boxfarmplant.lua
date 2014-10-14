@@ -5,12 +5,12 @@ function Create()
         {
             name = "Cabbage",
             minGrowthRate = 0.0,
-            maxGrowthRate = 3.0,
+            maxGrowthRate = 2.0,
             spawnObjName = "BoxfarmCabbage",
             spawnNumber = 1,
             requirements = {
                 nutrients = 700,
-                water = 1200,
+                maxTimeWithoutWater = 1200,
                 weeded = true
             },
             subTypeIndexStart = 0;
@@ -18,13 +18,13 @@ function Create()
         {
             name = "Potato",
             minGrowthRate = 0.0,
-            maxGrowthRate = 2.0,
+            maxGrowthRate = 1.5,
             spawnObjName = "BoxfarmPotato",
             spawnNumber = 3,
             requirements = {
                 nutrients = 2200,
-                water = 800,
-                weeded = false
+                maxTimeWithoutWater = 800,
+                weeded = true
             },
             subTypeIndexStart = 6;
         }
@@ -48,6 +48,7 @@ function Create()
     Object.SetProperty("GrowthRate", 1.0);
     Object.SetProperty("VegType", vegType);
     Object.SetProperty("ReqNutrients", requirements.nutrients);
+    Object.SetProperty("MaxTimeWithoutWater", requirements.maxTimeWithoutWater);
     Object.SetProperty("SpawnObjName", spawnObjName);
     Object.SetProperty("SpawnNumber", spawnNumber);
     Object.SetProperty("MinGrowthRate", minGrowthRate);
@@ -57,7 +58,6 @@ function Create()
     Object.SetProperty("TimeSinceWeeded", 0);
     Object.SetProperty("TimeSinceWatered", 0);
     Object.SetProperty("TimeSinceFertilized", 0);
-
 
     --Debug values
     Object.SetProperty("DebugThis", requirements.nutrients);
@@ -91,10 +91,12 @@ function Update(timePassed)
 
     -- Set variables for later use
     local numOfStates = 5;
-    local weedGrowTime = 100
+    local weedGrowTime = 100;
+    local minTimeReqForWater = 200;
+    local penaltyWater = 0.6;
 
     local mass = Object.GetProperty("Mass");
-    local growthRate = Object.GetProperty("GrowthRate");
+    --local growthRate = Object.GetProperty("GrowthRate");
     local vegType = Object.GetProperty("VegType");
     local reqNutrients = Object.GetProperty("ReqNutrients");
     local minGrowthRate = Object.GetProperty("MinGrowthRate");
@@ -102,6 +104,7 @@ function Update(timePassed)
     local timeSinceWeeded = Object.GetProperty("TimeSinceWeeded");
     local timeSinceWatered = Object.GetProperty("TimeSinceWatered");
     local timeSinceFertilized = Object.GetProperty("TimeSinceFertilized");
+    local maxTimeWithoutWater = Object.GetProperty("MaxTimeWithoutWater");
 
     --local jobHavestRequested = Object.GetProperty("JobHavestRequested");
 
@@ -113,18 +116,29 @@ function Update(timePassed)
        mass = 0;
     end
 
-
     --Object.SetProperty("DebugThis", type(timePassed) .. " " .. "timePassed: " .. timePassed );
 
-
-    -- Calculate growth rate
+    -- Calculate growth penalty
+    local totalPenalty = 0;
+    local totalBonus = 0;
+    local growthRate = 1;
 
     -- Needs Weeded
 
     -- Needs Water
+    if timeSinceWatered > minTimeReqForWater then
+        totalPenalty = totalPenalty + penaltyWater;
+        growthRate = growthRate - penaltyWater;
+        Object.CreateJob("BoxfarmPlant_Water");
+    else
 
     -- Needs Fertilizer
 
+    -- Calculate growth rate
+    if totalPenalty > 1 then
+        totalPenalty = 1;
+    end
+    --growthRate = growthRate - (growthRate * totalPenalty);
 
     -- Check for growthRate over or under limits
     if growthRate > maxGrowthRate then
@@ -168,6 +182,11 @@ function Update(timePassed)
         --end
     end
 
+    -- Plant vanish and spawn 0-5 adjencent plants center/up/right/down/left
+    if procentageGrown > 150 then
+        Object.Delete(this);
+    end
+
     local debugThis = Object.GetProperty("DebugThis");
 
     -- Set tooltips for debug
@@ -206,9 +225,12 @@ function JobComplete_BoxfarmPlant_Havest()
         end
         i = i + 1;
     end
-
 end
 
+
+function JobComplete_BoxfarmPlant_Remove()
+    Object.Delete(this);
+end
 
 
 --Object.SetProperty
@@ -218,6 +240,7 @@ end
 --Object.Spawn
 --Object.ApplyVelocity
 --Object.Delete( Object Name )
+--local objects = GetNearbyObjects(Type, SearchDistance)
 --Game.Spawn()
 --Game.LoseEquipment()
 --Game.Damage

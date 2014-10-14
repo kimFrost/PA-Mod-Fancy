@@ -15,6 +15,7 @@ END
 BEGIN Job
 	Name				BoxfarmPlant_Water
 	JobTime				2
+	Tool				BoxfarmWateringCan
 	Worker				Gardener
 	Worker				Prisoner
 	Qualification	    Gardening
@@ -29,12 +30,23 @@ BEGIN Job
 	Worker				Prisoner
 	Qualification	    Gardening
 	WorkGroup			Garden
+	Material            BoxfarmFertilizer
 END
 
 
 BEGIN Job
 	Name				BoxfarmPlant_Tend
 	JobTime				5
+	Worker				Gardener
+	Worker				Prisoner
+	Qualification	    Gardening
+	WorkGroup			Garden
+END
+
+
+BEGIN Job
+	Name				BoxfarmPlant_Remove
+	JobTime				6
 	Worker				Gardener
 	Worker				Prisoner
 	Qualification	    Gardening
