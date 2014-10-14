@@ -99,8 +99,8 @@ function Update(timePassed)
     --local growthRate = Object.GetProperty("GrowthRate");
     local vegType = Object.GetProperty("VegType");
     local reqNutrients = Object.GetProperty("ReqNutrients");
-    local minGrowthRate = Object.GetProperty("MinGrowthRate");
-    local maxGrowthRate = Object.GetProperty("MaxGrowthRate");
+    local minGrowthRate = tonumber(Object.GetProperty("MinGrowthRate"));
+    local maxGrowthRate = tonumber(Object.GetProperty("MaxGrowthRate"));
     local timeSinceWeeded = Object.GetProperty("TimeSinceWeeded");
     local timeSinceWatered = Object.GetProperty("TimeSinceWatered");
     local timeSinceFertilized = Object.GetProperty("TimeSinceFertilized");
@@ -131,6 +131,8 @@ function Update(timePassed)
         growthRate = growthRate - penaltyWater;
         Object.CreateJob("BoxfarmPlant_Water");
     else
+
+    end
 
     -- Needs Fertilizer
 
@@ -184,8 +186,11 @@ function Update(timePassed)
 
     -- Plant vanish and spawn 0-5 adjencent plants center/up/right/down/left
     if procentageGrown > 150 then
-        Object.Delete(this);
+        --Object.Delete(this);
+        --Object.Delete(self);
+        --Object.CreateJob("BoxfarmPlant_Remove");
     end
+
 
     local debugThis = Object.GetProperty("DebugThis");
 
@@ -229,7 +234,7 @@ end
 
 
 function JobComplete_BoxfarmPlant_Remove()
-    Object.Delete(this);
+    --Object.Delete(this);
 end
 
 
