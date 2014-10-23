@@ -117,6 +117,7 @@ function Update(timePassed)
     end
 
     --Object.SetProperty("DebugThis", type(timePassed) .. " " .. "timePassed: " .. timePassed );
+    Object.SetProperty("DebugThis", "timeSinceWatered: " .. timeSinceWatered );
 
     -- Calculate growth penalty
     local totalPenalty = 0;
@@ -129,10 +130,12 @@ function Update(timePassed)
     if timeSinceWatered > minTimeReqForWater then
         totalPenalty = totalPenalty + penaltyWater;
         growthRate = growthRate - penaltyWater;
-        Object.CreateJob("BoxfarmPlant_Water");
+        --Object.CreateJob("BoxfarmPlant_Water");
     else
 
     end
+    Object.SetProperty("TimeSinceWatered", timeSinceWatered);
+
 
     -- Needs Fertilizer
 
@@ -207,6 +210,8 @@ function SetState(state)
 end
 
 
+
+
 function JobComplete_BoxfarmPlant_Havest()
     -- Reset
     Object.SetProperty("SubType", 0);
@@ -233,7 +238,10 @@ function JobComplete_BoxfarmPlant_Havest()
 end
 
 
-function JobComplete_BoxfarmPlant_Remove()
+
+function JobComplete_BoxfarmPlant_Water()
+
+    Object.SetProperty("TimeSinceWatered", 0);
     --Object.Delete(this);
 end
 

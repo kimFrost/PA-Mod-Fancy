@@ -184,6 +184,31 @@ BEGIN Equipment
 END
 
 
+BEGIN Equipment
+    Name                 BoxfarmWateringCan
+    Scale                0.800000
+    AttackPower          0.40000
+    RechargeTime         1.00000
+    Properties           Tools
+    Properties           Metal
+    BEGIN   Sprite
+        x 5
+        y 0
+        w 1
+        h 1
+        RotateType 4
+        BEGIN Marker
+           x             0.9
+           y             1.0
+           Index         0
+        END
+    END
+END
+
+
+
+
+
 BEGIN Room
 	Name				Garden
 	Properties          PrisonersCanWork
@@ -194,6 +219,7 @@ BEGIN Room
 	BEGIN Requirement Type Object  Id BoxfarmWorktable END
 	BEGIN Requirement Type Outdoor END
 	BEGIN Contraband  Id BoxfarmTrowel END
+	BEGIN Contraband  Id BoxfarmWateringCan END
 END
 
 
