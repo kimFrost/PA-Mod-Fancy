@@ -9,7 +9,7 @@ function Create()
             spawnObjName = "BoxfarmCabbage",
             spawnNumber = 1,
             requirements = {
-                nutrients = 700,
+                nutrients = 70,
                 maxTimeWithoutWater = 1200,
                 weeded = true
             },
@@ -22,7 +22,7 @@ function Create()
             spawnObjName = "BoxfarmPotato",
             spawnNumber = 3,
             requirements = {
-                nutrients = 2200,
+                nutrients = 220,
                 maxTimeWithoutWater = 800,
                 weeded = true
             },
@@ -65,7 +65,7 @@ function Create()
 
 
     -- Job request states (Jobs need to be requested every frame, for some reason. Seems illogical)
-    --Object.SetProperty("JobHavestRequested", false);
+    Object.SetProperty("JobHavestRequested", false);
     --Object.SetProperty("JobWaterRequested", false);
     --Object.SetProperty("JobWeedRequested", false);
     --Object.SetProperty("JobFertilizeRequested", false);
@@ -106,7 +106,7 @@ function Update(timePassed)
     local timeSinceFertilized = Object.GetProperty("TimeSinceFertilized");
     local maxTimeWithoutWater = Object.GetProperty("MaxTimeWithoutWater");
 
-    --local jobHavestRequested = Object.GetProperty("JobHavestRequested");
+    local jobHavestRequested = Object.GetProperty("JobHavestRequested");
 
     timeSinceWeeded = timeSinceWeeded + timePassed;
     timeSinceWatered = timeSinceWatered + timePassed;
@@ -181,10 +181,10 @@ function Update(timePassed)
 
     -- Request havest if fully grown
     if procentageGrown >= 100 then
-        --if jobHavestRequested ~= true then
+        if jobHavestRequested ~= true then
             Object.CreateJob("BoxfarmPlant_Havest");
             Object.SetProperty("JobHavestRequested", true);
-        --end
+        end
     end
 
     -- Plant vanish and spawn 0-5 adjencent plants center/up/right/down/left
@@ -195,7 +195,8 @@ function Update(timePassed)
     end
 
 
-    local debugThis = Object.GetProperty("DebugThis");
+    --local debugThis = Object.GetProperty("DebugThis");
+    local debugThis = Object.GetProperty("JobHavestRequested");
 
     -- Set tooltips for debug
     Object.SetProperty("Tooltip", "debugThis: " .. tostring(debugThis) .. "\n" .. "growthRate: " .. tostring(growthRate) .. "\n" .. "Mass: " .. tostring(mass) .. "\n" .. "subType: " .. tostring(subType) .. "\n" .. "Grown: " .. tostring(procentageGrown) .. "%" .. "\n" .. "vegType: " .. tostring(vegType));
@@ -216,6 +217,7 @@ function JobComplete_BoxfarmPlant_Havest()
     -- Reset
     Object.SetProperty("SubType", 0);
     Object.SetProperty( "Mass", 0.0 );
+    Object.SetProperty("JobHavestRequested", false);
 
     local ourX = Object.GetProperty("Pos.x");
     local ourY = Object.GetProperty("Pos.y");

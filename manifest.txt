@@ -1,8 +1,8 @@
 
-Name                 "Fancy Mod"  
+Name                 Garden Mod"  
 Description          "Add fancy stuff.\r\nThis is for learning the mod system\r\n"  
 IsTranslation        false  
 FileID               Null
 UpdateTime           Null
 SteamAuthor          Null
-Author               Null
+Author               Frost

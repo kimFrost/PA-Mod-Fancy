@@ -1,11 +1,11 @@
 
 BEGIN Research
-	Name			Vending
+	Name			Gardening
 	Type			Ability
-	Requires		Warden
-	Admin			Warden
+	Requires		Maintainance
+	Admin			Maintainance
 	Cost			-400
 	Time			360
-	x				600
-	y				350
+	X				300
+	Y				650
 END
