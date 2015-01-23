@@ -85,6 +85,10 @@ function Create()
     --Object.SetProperty("JobWaterRequested", false);
     --Object.SetProperty("JobWeedRequested", false);
     --Object.SetProperty("JobFertilizeRequested", false);
+
+    -- show debugger
+    --print();
+    Game.DebugOut("Show Debugger");
 end
 
 
