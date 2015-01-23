@@ -86,9 +86,15 @@ function Create()
     --Object.SetProperty("JobWeedRequested", false);
     --Object.SetProperty("JobFertilizeRequested", false);
 
-    -- show debugger
-    --print();
-    Game.DebugOut("Show Debugger");
+    
+ 
+	Game.DebugOut("c value minGrowthRate " .. minGrowthRate);
+	Game.DebugOut("c type minGrowthRate " .. type(minGrowthRate));
+	Game.DebugOut("c value this.minGrowthRate " .. this.minGrowthRate);
+	Game.DebugOut("c type this.minGrowthRate " .. type(this.minGrowthRate));
+    Game.DebugOut("c Show Debugger"); 
+	-- show debugger by error force
+	print();
 end
 
 
@@ -98,9 +104,9 @@ function Update(timePassed)
 
     -- Get position and material the plant is on
     -- ourX = Object.GetProperty("Pos.x");
-    local ourX = this.pos.x;
+    local ourX = this.Pos.x;
     --local ourY = Object.GetProperty("Pos.y");
-    local ourY = this.pos.y;
+    local ourY = this.Pos.y;
     local material = Object.GetMaterial( ourX, ourY );
 
     -- Require Dirt
@@ -128,7 +134,7 @@ function Update(timePassed)
     --local minGrowthRate = tonumber(Object.GetProperty("MinGrowthRate"));
     local minGrowthRate = this.minGrowthRate;
     --local maxGrowthRate = tonumber(Object.GetProperty("MaxGrowthRate"));
-    local maxGrowthRate = tonumber(this.maxGrowthRate);
+    local maxGrowthRate = this.maxGrowthRate;
     --local timeSinceWeeded = Object.GetProperty("TimeSinceWeeded");
     local timeSinceWeeded = this.timeSinceWeeded;
     --local timeSinceWatered = Object.GetProperty("TimeSinceWatered");
@@ -179,7 +185,13 @@ function Update(timePassed)
     end
     --growthRate = growthRate - (growthRate * totalPenalty);
 
+	--Game.DebugOut("u value minGrowthRate " .. minGrowthRate);
+	--Game.DebugOut("u type minGrowthRate " .. type(minGrowthRate)); 
+	--print();
+	
     -- Check for growthRate over or under limits
+	minGrowthRate = tonumber(minGrowthRate);
+	maxGrowthRate = tonumber(maxGrowthRate);
     if growthRate > maxGrowthRate then
         growthRate = maxGrowthRate;
     end
@@ -263,9 +275,9 @@ function JobComplete_BoxfarmPlant_Havest()
     this.jobHavestRequested = false;
 
     --local ourX = Object.GetProperty("Pos.x");
-    local ourX = this.pos.x;
+    local ourX = this.Pos.x;
     --local ourY = Object.GetProperty("Pos.y");
-    local ourY = this.pos.y;
+    local ourY = this.Pos.y;
     --local spawnObjName = Object.GetProperty("SpawnObjName");
     local spawnObjName = this.spawnObjName;
     --local spawnNumber = Object.GetProperty("SpawnNumber");
