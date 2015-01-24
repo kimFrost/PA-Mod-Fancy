@@ -8,11 +8,11 @@ function Create()
             spawnObjName = "BoxfarmCabbage",
             spawnNumber = 1,
             requirements = {
-                nutrients = 700,
+                nutrients = 70,
                 maxTimeWithoutWater = 1200,
                 weeded = true
             },
-            subTypeIndexStart = 0
+            subTypeIndexStart = 0;
         },
         {
             name = "Potato",
@@ -21,11 +21,11 @@ function Create()
             spawnObjName = "BoxfarmPotato",
             spawnNumber = 3,
             requirements = {
-                nutrients = 2200,
+                nutrients = 220,
                 maxTimeWithoutWater = 800,
                 weeded = true
             },
-            subTypeIndexStart = 6
+            subTypeIndexStart = 6;
         }
     }
     local numOfPlantTypes = 0;
@@ -42,35 +42,42 @@ function Create()
     local spawnObjName = plantTypes[vegIndex].spawnObjName;
     local spawnNumber = plantTypes[vegIndex].spawnNumber;
 
-    -- Strings
-    this.vegType = vegType;
-    this.spawnObjName = spawnObjName;
-    -- Numbers
-    this.spawnNumber = spawnNumber;
+
     this.mass = 0.0;
     this.subType = 0;
     this.growthRate = 1.0;
-    this.growthPenalty = 0;
-    this.minGrowthRate = minGrowthRate;
-    this.maxGrowthRate = maxGrowthRate;
+    this.vegType = vegType;
     this.reqNutrients = requirements.nutrients;
     this.maxTimeWithoutWater = requirements.maxTimeWithoutWater;
+    this.spawnObjName = spawnObjName;
+    this.spawnNumber = spawnNumber;
+    this.minGrowthRate = minGrowthRate;
+    this.maxGrowthRate = maxGrowthRate;
+
+    -- Time since requirement met
+    --Object.SetProperty("TimeSinceWeeded", 0);
+    --Object.SetProperty("TimeSinceWatered", 0);
+    --Object.SetProperty("TimeSinceFertilized", 0);
     this.timeSinceWeeded = 0;
     this.timeSinceWatered = 0;
     this.timeSinceFertilized = 0;
-    -- Bools
-    this.jobHavestRequested = false;
-    this.jobWaterRequested = false;
-    this.jobFertilizeRequested = false;
 
     --Debug values
+    --Object.SetProperty("DebugThis", requirements.nutrients);
     this.debugThis = requirements.nutrients;
 
-    --this.something = true;
-    --Game.DebugOut("c value this.something " .. tostring(this.something));
-    --Game.DebugOut("c type this.something " .. type(this.something));
-    -- show debugger by error force
-    --print();
+    -- Job request states (Jobs need to be requested every frame, for some reason. Seems illogical)
+    this.jobHavestRequested = false;
+    --Object.SetProperty("JobWaterRequested", false);
+    --Object.SetProperty("JobWeedRequested", false);
+    --Object.SetProperty("JobFertilizeRequested", false);
+
+
+    this.something = true;
+	Game.DebugOut("c value this.something " .. this.something);
+	Game.DebugOut("c type this.something " .. type(this.something));
+	-- show debugger by error force
+	--print();
 end
 
 
@@ -90,33 +97,35 @@ function Update(timePassed)
     -- Set variables for later use
     local numOfStates = 5;
     local weedGrowTime = 100;
-    local minTimeReqForWater = 500;
+    local minTimeReqForWater = 200;
+    local penaltyWater = 0.6;
 
     -- Strings
     local vegType = this.vegType;
     -- Numbers
     local mass = tonumber(this.mass);
     local reqNutrients = tonumber(this.reqNutrients);
-    local growthPenalty =  tonumber(this.growthPenalty);
-    local growthPenalty =  tonumber(this.growthPenalty);
     local minGrowthRate =  tonumber(this.minGrowthRate);
     local maxGrowthRate = tonumber(this.maxGrowthRate);
     local timeSinceWeeded = tonumber(this.timeSinceWeeded);
     local timeSinceWatered = tonumber(this.timeSinceWatered);
     local timeSinceFertilized = tonumber(this.timeSinceFertilized);
     local maxTimeWithoutWater = tonumber(this.maxTimeWithoutWater);
+    -- Bools
+    local jobHavestRequested = this.jobHavestRequested
 
-    -- Make sure mass always has a value
-    if mass == nil then
-       mass = 0;
-    end
-
-    -- Increase Time
     timeSinceWeeded = timeSinceWeeded + timePassed;
     timeSinceWatered = timeSinceWatered + timePassed;
     timeSinceFertilized = timeSinceFertilized + timePassed;
 
+    if mass == nil then
+       mass = 0;
+    end
+
+    this.debugThis =  "timeSinceWatered: " .. timeSinceWatered;
+
     -- Calculate growth penalty
+    local totalPenalty = 0;
     local totalBonus = 0;
     local growthRate = 1;
 
@@ -124,28 +133,25 @@ function Update(timePassed)
 
     -- Needs Water
     if timeSinceWatered > minTimeReqForWater then
-        growthPenalty = growthPenalty + 0.0001;
-        growthRate = growthRate - growthPenalty;
-        if this.jobWaterRequested ~= true then
-            Object.CreateJob("BoxfarmPlant_Water");
-            this.jobWaterRequested = true;
-        end
+        totalPenalty = totalPenalty + penaltyWater;
+        growthRate = growthRate - penaltyWater;
+        --Object.CreateJob("BoxfarmPlant_Water");
     else
-        growthPenalty = growthPenalty - 0.0005;
+
     end
+    this.timeSinceWatered = timeSinceWatered;
 
     -- Needs Fertilizer
 
     -- Calculate growth rate
-    if growthPenalty > 1 then
-        growthPenalty = 1;
+    if totalPenalty > 1 then
+        totalPenalty = 1;
     end
-    if growthPenalty < 0 then
-        growthPenalty = 0;
-    end
-    growthRate = growthRate * (1 - growthPenalty);
+    --growthRate = growthRate - (growthRate * totalPenalty);
 
     -- Check for growthRate over or under limits
+	minGrowthRate = tonumber(minGrowthRate);
+	maxGrowthRate = tonumber(maxGrowthRate);
     if growthRate > maxGrowthRate then
         growthRate = maxGrowthRate;
     end
@@ -155,6 +161,7 @@ function Update(timePassed)
 
     -- Increae mass
     mass = mass + (timePassed * growthRate);
+    this.mass = mass;
 
     -- Calculate the state of the plant
     local subType = 0;
@@ -180,8 +187,9 @@ function Update(timePassed)
 
     -- Request havest if fully grown
     if procentageGrown >= 100 then
-        if this.jobHavestRequested ~= true then
+        if jobHavestRequested ~= true then
             Object.CreateJob("BoxfarmPlant_Havest");
+            --Object.SetProperty("JobHavestRequested", true);
             this.jobHavestRequested = true;
         end
     end
@@ -194,27 +202,8 @@ function Update(timePassed)
     end
 
     local debugThis = this.jobHavestRequested;
-
     -- Set tooltips for debug
-    this.Tooltip = "debugThis: " .. tostring(debugThis) .. "\n" ..
-            "growthRate: " .. tostring(growthRate) .. "\n" ..
-            "Mass: " .. tostring(mass) .. "\n" ..
-            "subType: " ..  tostring(subType) .. "\n" ..
-            "timeSinceWatered: " ..  tostring(timeSinceWatered) .. "\n" ..
-            "minTimeReqForWater: " ..  tostring(minTimeReqForWater) .. "\n" ..
-            "growthPenalty: " ..  tostring(growthPenalty) .. "\n" ..
-            --"Game.Time: " .. tostring(Game.Time()) .. "\n" ..
-            "jobHavestRequested: " .. tostring(this.jobHavestRequested) .. "\n" ..
-            "jobWaterRequested: " .. tostring(this.jobWaterRequested) .. "\n" ..
-            "Grown: " .. tostring(procentageGrown) .. "%" .. "\n" ..
-            "vegType: " .. tostring(vegType);
-
-
-    -- Set object variables
-    this.timeSinceWatered = timeSinceWatered;
-    this.growthPenalty = growthPenalty;
-    this.mass = mass;
-
+    this.Tooltip = "debugThis: " .. tostring(debugThis) .. "\n" .. "growthRate: " .. tostring(growthRate) .. "\n" .. "Mass: " .. tostring(mass) .. "\n" .. "subType: " .. tostring(subType) .. "\n" .. "Grown: " .. tostring(procentageGrown) .. "%" .. "\n" .. "vegType: " .. tostring(vegType);
 end
 
 
@@ -225,26 +214,14 @@ function SetState(state)
     end
 end
 
-function resetPlant()
-    this.mass = 0.0;
-    this.subType = 0;
-    this.growthRate = 1.0;
-    this.growthPenalty = 0;
-    this.timeSinceWeeded = 0;
-    this.timeSinceWatered = 0;
-    this.timeSinceFertilized = 0;
-    -- Bools
-    this.jobHavestRequested = false;
-    this.jobWaterRequested = false;
-    this.jobFertilizeRequested = false;
-end
-
 
 
 
 function JobComplete_BoxfarmPlant_Havest()
     -- Reset
-    resetPlant();
+    this.subType = 0;
+    this.mass = 0.0;
+    this.jobHavestRequested = false;
 
     local ourX = this.Pos.x;
     local ourY = this.Pos.y;
@@ -268,7 +245,6 @@ end
 
 function JobComplete_BoxfarmPlant_Water()
     this.timeSinceWatered = 0;
-    this.jobWaterRequested = false;
     --Object.Delete(this);
 end
 

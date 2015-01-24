@@ -217,6 +217,7 @@ BEGIN Room
 	BEGIN Requirement Type Enclosed END
 	BEGIN Requirement Type MinimumSize  x 11  y 5 END
 	BEGIN Requirement Type Object  Id BoxfarmWorktable END
+	BEGIN Requirement Type Object  Id BoxfarmPlant END
 	BEGIN Requirement Type Outdoor END
 	BEGIN Contraband  Id BoxfarmTrowel END
 	BEGIN Contraband  Id BoxfarmWateringCan END
