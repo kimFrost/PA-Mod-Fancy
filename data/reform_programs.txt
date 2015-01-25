@@ -9,7 +9,7 @@ BEGIN Program
 	SessionLength		120
 	NumSessions			1
 	Difficulty			2
-	Research			None
+	Research			Gardening
 	Room				Garden
 	Teacher				Gardener
 	Equipment			None

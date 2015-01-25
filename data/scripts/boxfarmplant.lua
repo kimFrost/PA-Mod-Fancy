@@ -48,7 +48,7 @@ function Create()
     -- Numbers
     this.spawnNumber = spawnNumber;
     this.mass = 0.0;
-    this.subType = 0;
+    this.SubType = 0;
     this.growthRate = 1.0;
     this.growthPenalty = 0;
     this.minGrowthRate = minGrowthRate;
@@ -124,7 +124,7 @@ function Update(timePassed)
 
     -- Needs Water
     if timeSinceWatered > minTimeReqForWater then
-        growthPenalty = growthPenalty + 0.0001;
+        growthPenalty = growthPenalty + 0.0003;
         growthRate = growthRate - growthPenalty;
         if this.jobWaterRequested ~= true then
             Object.CreateJob("BoxfarmPlant_Water");
@@ -159,14 +159,31 @@ function Update(timePassed)
     -- Calculate the state of the plant
     local subType = 0;
     local procentageGrown = 100 / (reqNutrients / mass);
+    local tempProcentage = 0;
     local i = 0;
-    while i <= numOfStates do
-        local TempProcentage = 100 / numOfStates * i;
-        if procentageGrown > TempProcentage then
+
+    if (procentageGrown > 20 and procentageGrown <= 40) then
+        subType = 1;
+    end
+    if (procentageGrown > 40 and procentageGrown <= 70) then
+        subType = 2;
+    end
+    if (procentageGrown > 70 and procentageGrown < 100) then
+        subType = 3;
+    end
+    if (procentageGrown >= 100) then
+        subType = 4;
+    end
+
+    --[[
+    while i < numOfStates do
+        tempProcentage = 100 / numOfStates * i;
+        if procentageGrown > tempProcentage then
             subType = i;
         end
         i = i + 1;
     end
+    --]]
 
     -- Check if plant state is over number of state.
     if subType > (numOfStates-1) then
@@ -219,15 +236,15 @@ end
 
 
 function SetState(state)
-    local currentSubtype = this.subType;
+    local currentSubtype = this.SubType;
     if currentSubtype ~= state then
-        this.subType = state;
+        this.SubType = state;
     end
 end
 
 function resetPlant()
     this.mass = 0.0;
-    this.subType = 0;
+    this.SubType = 0;
     this.growthRate = 1.0;
     this.growthPenalty = 0;
     this.timeSinceWeeded = 0;
